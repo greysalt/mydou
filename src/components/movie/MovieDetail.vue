@@ -118,7 +118,8 @@ export default {
   methods: {
     fetchMovieDetail () {
       const id = this.$route.params.id
-      const url = '/api/movie/subject/' + id
+      // const url = '/api/movie/subject/' + id //开发用
+      const url = 'https://api.douban.com/v2/movie/subject/' + id
       const _that = this
       axios.get(url)
         .then(function (res) {

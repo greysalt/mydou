@@ -55,7 +55,8 @@ const actions = {
     var m = context.state.movies
     if (m.movie_coming_soon.count === 0) {
       context.state.showLoading = true
-      const url = '/api/movie/' + payload.tabName + '?count=12'
+      // const url = '/api/movie/' + payload.tabName + '?count=12' //开发用
+      const url = 'https://api.douban.com/v2/movie/' + payload.tabName + '?count=12'
       axios.get(url)
         .then(function (res) {
           var movieArr = []
@@ -74,7 +75,8 @@ const actions = {
   },
   fetchMoviesQuery (context, payload) {
     const query = context.state.moviesQuery
-    const url = '/api/movie/search?q=' + query.q + '&count=10&start=' + query.count
+    // const url = '/api/movie/search?q=' + query.q + '&count=10&start=' + query.count //开发用
+    const url = 'https://api.douban.com/v2/movie/search?q=' + query.q + '&count=10&start=' + query.count
     context.state.showLoading = true
     axios.get(url)
       .then(function (res) {

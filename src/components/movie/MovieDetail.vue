@@ -2,7 +2,7 @@
   <div class="m-detail-container">
     
     <div class="head">
-      <div class="post md-elevation-24" :style="{backgroundImage:'url(' + movie.images.small + ')'}"></div>
+      <div class="post md-elevation-24" :style="{backgroundImage:'url(' + movie.images.small.replace('.jpg', '.webp') + ')'}"></div>
       <div class="btn-back" @click="back()">
           <BtnBack></BtnBack>
       </div>    
@@ -53,7 +53,7 @@
           
             <div class="person" v-for="person in movie.directors">
               <a :href="person.avatars.small" target="_blank">
-                <div class="img md-elevation-1" :style="{backgroundImage:'url(' + person.avatars.small + ')'}"></div>
+                <div class="img md-elevation-1" :style="{backgroundImage:'url(' + person.avatars.small.replace('.jpg', '.webp') + ')'}"></div>
                 <p class="name">{{ person.name }}</p>
               </a>
             </div>
@@ -71,7 +71,7 @@
           
             <div class="person" v-for="person in movie.casts">
               <a :href="person.avatars.small" target="_blank">
-                <div class="img  md-elevation-1" :style="{backgroundImage:'url(' + person.avatars.small + ')' }"></div>
+                <div class="img  md-elevation-1" :style="{backgroundImage:'url(' + person.avatars.small.replace('.jpg', '.webp') + ')' }"></div>
               </a>
               <p class="name">{{ person.name }}</p>
             </div>

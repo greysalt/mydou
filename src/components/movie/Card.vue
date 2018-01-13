@@ -20,6 +20,8 @@
         </md-card>
       </div> 
     </div>
+
+    <div class="nomore-info" v-show="subjects.length">- 已将到底啦 -</div>
   </div>
 </template>
 <script>
@@ -44,13 +46,14 @@ export default{
 <style lang="scss">
 .card-container{
   width:100%;
-  padding:5px 5px 100px 5px;
-  height:90%;
-  overflow:scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  padding:5px 5px 5px 5px;
   background:whitesmoke;
+  .nomore-info {
+    color:#ccc;
+    text-align:center;
+    padding:30px;
+    background:whitesmoke;
+  }
   .card{
     margin:5px;
     .card-img{

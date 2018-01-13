@@ -10,8 +10,8 @@
             <md-input ref="movieSearch" v-model="queryInput" :placeholder="placeholder" @keyup.enter="newFetch()" @focus="placeholder=''" @blur="placeholder='请输入要搜索的电影信息'"></md-input>
           </md-field>
 
-            <md-button class="md-icon-button md-primary" @click="queryInput=''">
-              <md-icon>clear</md-icon>
+            <md-button class="md-icon-button md-primary" @click="newFetch()">
+              <md-icon>search</md-icon>
             </md-button>
         </div>
         
@@ -41,10 +41,14 @@
             </md-ripple>
           </div>
         </transition-group>
-
+        
+        <!-- 错误信息 -->
+        <div v-if="showError" style="text-align:center;color:#ccc;">{{showError}}</div>
+        
         <transition name="loading">
           <Loading v-if="showLoading"></Loading>
-        </transition>  
+        </transition>
+          
 
         <div class="md-layout md-alignment-center-center">
           <md-button class="md-primary" v-if="showBtn && moviesQuery.length && queryInput && !showLoading" @click="fetchQuery()">加载更多</md-button>
@@ -81,6 +85,9 @@ export default {
     showLoading () {
       return this.$store.state.showLoading
     },
+    showError () {
+      return this.$store.state.showError
+    },
     queryInput: {
       get: function () {
         return this.$store.state.moviesQuery.q
@@ -109,21 +116,17 @@ export default {
   position:absolute;
   background:whitesmoke;
   width:100%;
-  height: 100%;
+  min-height:100vh;
   z-index:200;
   .search-bar{
     width:100%;
-    position:absolute;
+    position:fixed;
     top:0;
     z-index:99;
   }
   .result-box{
     width:100%;
     height:100%;
-    overflow:scroll;
-    &::-webkit-scrollbar {
-      display: none;
-    }
     .result{
       padding: 76px 14px;
       .card-box{

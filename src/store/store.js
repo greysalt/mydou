@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
+// import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -22,6 +22,7 @@ const state = {
     showBtn: true
   },
   showLoading: false,
+  showError: '',
   movieTabName: 'in_theaters'
 }
 
@@ -55,12 +56,15 @@ const actions = {
     var m = context.state.movies
     if (m.movie_coming_soon.count === 0) {
       context.state.showLoading = true
-      // const url = '/api/movie/' + payload.tabName + '?count=12' //开发用
+      context.state.showError = ''
+      // const url = '/api/movie/' + payload.tabName + '?count=12' // 开发用
       const url = 'https://api.douban.com/v2/movie/' + payload.tabName + '?count=12'
-      axios.get(url)
-        .then(function (res) {
+      $.ajax({ // eslint-disable-line
+        url: url,
+        dataType: 'jsonp',
+        success: function (data) {
           var movieArr = []
-          res.data.subjects.map(function (item) {
+          data.subjects.map(function (item) {
             var movie = {}
             movie.id = item.id
             movie.title = item.title
@@ -70,21 +74,59 @@ const actions = {
           })
           context.state.showLoading = false
           context.commit('FETCH_MOVIES', {subjects: movieArr, tabName: payload.tabName})
-        })
+        },
+        error: function (xhr, err) {
+          context.state.showLoading = false
+          context.state.showError = 'Opps~' + err
+        }
+      })
+
+      // axios.get(url)
+      //   .then(function (res) {
+      //     var movieArr = []
+      //     res.data.subjects.map(function (item) {
+      //       var movie = {}
+      //       movie.id = item.id
+      //       movie.title = item.title
+      //       movie.rating = item.rating.average
+      //       movie.imgUrl = item.images.large
+      //       movieArr.push(movie)
+      //     })
+      //     context.state.showLoading = false
+      //     context.commit('FETCH_MOVIES', {subjects: movieArr, tabName: payload.tabName})
+      //   }).catch(function (error) {
+      //     context.state.showLoading = false
+      //     context.state.showError = 'Opps~' + error.message
+      //   })
     }
   },
   fetchMoviesQuery (context, payload) {
     const query = context.state.moviesQuery
-    // const url = '/api/movie/search?q=' + query.q + '&count=10&start=' + query.count //开发用
+    // const url = '/api/movie/search?q=' + query.q + '&count=10&start=' + query.count // 开发用
     const url = 'https://api.douban.com/v2/movie/search?q=' + query.q + '&count=10&start=' + query.count
+    context.state.showError = ''
     context.state.showLoading = true
-    axios.get(url)
-      .then(function (res) {
+    $.ajax({ // eslint-disable-line
+      url: url,
+      dataType: 'jsonp',
+      success: function (data) {
         context.state.showLoading = false
-        context.commit('FETCH_MOVIES_QUERY', {subjects: res.data.subjects})
-      }).catch(function (error) {
-        console.log(error)
-      })
+        context.commit('FETCH_MOVIES_QUERY', {subjects: data.subjects})
+      },
+      error: function (xhr, err) {
+        context.state.showLoading = false
+        context.state.showError = 'Opps~' + err
+      }
+    })
+
+    // axios.get(url)
+    //   .then(function (res) {
+    //     context.state.showLoading = false
+    //     context.commit('FETCH_MOVIES_QUERY', {subjects: res.data.subjects})
+    //   }).catch(function (error) {
+    //     context.state.showLoading = false
+    //     context.state.showError = 'Opps~' + error.message
+    //   })
   }
 }
 

@@ -38,23 +38,23 @@ export default {
   box-sizing: border-box;
 }
 
+body{
+  background:whitesmoke;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /*text-align: center;*/
   color: #333;
-  background: #ddd;
+  background: whitesmoke;
 }
 
 #app .viewport{
   width:100%;
-  max-width: 500px;
-  height: 100vh;
-  background: #fff;
+  background: whitesmoke;
   position:relative;
-  margin:0 auto;
-  overflow:hidden;
 }
 
 .clear{
@@ -67,12 +67,20 @@ export default {
 //   // border-bottom:1px solid #ddd;
 // }
 
-//插件元素调整（去除a标签默认主题色）
-.md-theme-default a:not(.md-button){
+a{
   text-decoration:none;
   color:rgba(0,0,0,.87);
   &:hover,&:active{
     color:rgba(0,0,0,.87);
+  }
+}
+
+//插件元素调整（去除a标签默认主题色）
+.md-theme-default a:not(.md-button){
+  text-decoration:none !important;
+  color:rgba(0,0,0,.87) !important;
+  &:hover,&:active{
+    color:rgba(0,0,0,.87) !important;
   }
 }
 

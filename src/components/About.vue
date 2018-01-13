@@ -52,7 +52,7 @@ export default {
 <style lang="scss">
   .about-container{
     width:100%;
-    height:100%;
+    height:100vh;
     background:whitesmoke;
     position:absolute;
     z-index:100;

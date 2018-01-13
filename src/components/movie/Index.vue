@@ -1,34 +1,39 @@
 <template>
   <div class="index-container">
-      <md-toolbar class="header md-primary" md-elevation="2">
-        <md-button class="md-icon-button" @click="showNav=!showNav">
-          <md-icon>menu</md-icon>
-        </md-button>
-        <span class="md-title">MOVIE</span>
-        <div class="md-toolbar-section-end">
-          <router-link to="/movie/search">
-            <md-button class="md-icon-button">
-              <md-icon>search</md-icon>
-            </md-button>
-          </router-link>
-        </div>
-        
-      </md-toolbar>
+      <div class="head">            
+        <md-toolbar class="md-primary" md-elevation="2">
+          <md-button class="md-icon-button" @click="showNav=!showNav">
+            <md-icon>menu</md-icon>
+          </md-button>
+          <span class="md-title">MOVIE</span>
+          <div class="md-toolbar-section-end">
+            <router-link to="/movie/search">
+              <md-button class="md-icon-button">
+                <md-icon>search</md-icon>
+              </md-button>
+            </router-link>
+          </div>
+          
+        </md-toolbar>
 
-      <md-tabs class="index-tab" md-alignment="fixed" :md-active-tab="'tab_' + movieTabName">
-        <md-tab id="tab_in_theaters" md-label="正在热映" @click="changeTab('in_theaters')"></md-tab>
-        <md-tab id="tab_coming_soon" md-label="即将上映" @click="changeTab('coming_soon')"></md-tab>
-      </md-tabs>
+        <md-tabs class="index-tab" md-alignment="fixed" :md-active-tab="'tab_' + movieTabName">
+          <md-tab id="tab_in_theaters" md-label="正在热映" @click="changeTab('in_theaters')"></md-tab>
+          <md-tab id="tab_coming_soon" md-label="即将上映" @click="changeTab('coming_soon')"></md-tab>
+        </md-tabs>
+      </div>
+
 
         <div class="index-loading">
           <transition name="loading-fade">
             <Loading v-if="showLoading"></Loading>
-          </transition> 
-        </div>
-         
+          </transition>
+          <div v-if="showError" style="text-align:center;color:#ccc;">{{showError}}</div> 
+        </div>         
       
-        <Card v-if="movieTabName === 'in_theaters'" tab-name="in_theaters"></Card> 
-        <Card v-if="movieTabName === 'coming_soon'" tab-name="coming_soon"></Card>
+        <div class="cards">
+          <Card v-if="movieTabName === 'in_theaters'" tab-name="in_theaters"></Card> 
+          <Card v-if="movieTabName === 'coming_soon'" tab-name="coming_soon"></Card>  
+        </div>
 
       <md-drawer class="drawer":md-active.sync="showNav">
         <div class="drawer-title">MyDou V1.0</div>
@@ -81,6 +86,9 @@ export default {
     },
     movieTabName () {
       return this.$store.state.movieTabName
+    },
+    showError () {
+      return this.$store.state.showError
     }
   },
   methods: {
@@ -112,22 +120,34 @@ export default {
 .index-container{
   position: absolute;
   width:100%;
-  height:100%;
-  overflow: hidden;
+  height:auto;
   z-index:0;
+  .head {
+    width:100%;
+    position:fixed;
+    top:0;
+    z-index:10;
+  }
+  .cards {
+    padding-top:104px;
+  }
   
 }
 
 .index-loading {
   position:absolute;
   width:100%;
-  z-index:99;
+  z-index:0;
   margin-top:200px;
 }
 
 .md-drawer{
   width:300px;
   max-width: calc(100vw - 125px) !important;
+  z-index:999 !important;
+}
+.md-overlay {
+  z-index:888 !important;
 }
 
 .drawer{

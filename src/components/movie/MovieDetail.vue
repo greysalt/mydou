@@ -84,7 +84,7 @@
   </div>
 </template>
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 import Star from '../Star.vue'
 import BtnBack from '../BtnBack.vue'
 
@@ -118,14 +118,25 @@ export default {
   methods: {
     fetchMovieDetail () {
       const id = this.$route.params.id
-      // const url = '/api/movie/subject/' + id //开发用
+      // const url = '/api/movie/subject/' + id // 开发用
       const url = 'https://api.douban.com/v2/movie/subject/' + id
       const _that = this
-      axios.get(url)
-        .then(function (res) {
-          console.log(res.data)
-          _that.movie = res.data
-        })
+      $.ajax({  // eslint-disable-line
+        url: url,
+        dataType: 'jsonp',
+        success: function (data) {
+          _that.movie = data
+        },
+        error: function (xhr, err) {
+          console.log(err)
+        }
+      })
+
+      // axios.get(url)
+      //   .then(function (res) {
+      //     console.log(res.data)
+      //     _that.movie = res.data
+      //   })
     },
     back () {
       this.$router.go(-1)
@@ -142,12 +153,8 @@ export default {
   position: absolute;
   z-index:400;
   width:100%;
-  height:100%;
-  background:rgb(245,245,245);
-  overflow:scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  min-height:100vh;
+  background:whitesmoke;
   .head{
     position:relative;
     width:100%;

@@ -1,8 +1,8 @@
 <template>
-  <div class="index-container">
+  <div class="index-container" ref="index_container">
       <div class="head">            
         <md-toolbar class="md-primary" md-elevation="2">
-          <md-button class="md-icon-button" @click="showNav=!showNav">
+          <md-button class="md-icon-button" @click="showDrawer = !showDrawer">
             <md-icon>menu</md-icon>
           </md-button>
           <span class="md-title">MOVIE</span>
@@ -35,10 +35,10 @@
           <Card v-if="movieTabName === 'coming_soon'" tab-name="coming_soon"></Card>  
         </div>
 
-      <md-drawer class="drawer":md-active.sync="showNav">
+      <md-drawer class="drawer" :md-active.sync="showDrawer">
         <div class="drawer-title">MyDou V1.0</div>
         <md-list>
-          <md-list-item to="/movie" @click="showNav=!showNav">
+          <md-list-item to="/movie" @click="showDrawer=!showDrawer">
             <md-icon class="md-primary">movie</md-icon>
             <span class="md-list-item-text">电影</span>
           </md-list-item>
@@ -77,7 +77,7 @@ export default {
   },
   data () {
     return {
-      showNav: false
+      showDrawer: false
     }
   },
   computed: {
@@ -97,6 +97,15 @@ export default {
         this.$store.dispatch('fetchMovies', {tabName: tabName})
       }
       this.$store.commit('CHANGE_MOVIE_TAB', {tabName: tabName})
+    }
+  },
+  watch: {
+    showDrawer: function (val) {
+      if (val === true) {
+        this.$refs.index_container.classList.add('hide')
+      } else {
+        this.$refs.index_container.classList.remove('hide')
+      }
     }
   },
   mounted () {
@@ -120,13 +129,20 @@ export default {
 .index-container{
   position: absolute;
   width:100%;
-  height:auto;
   z-index:0;
+  &.hide{
+    height:100vh;
+    overflow:hidden;
+  }
   .head {
     width:100%;
     position:fixed;
     top:0;
     z-index:10;
+    .index-tab {
+      width:100%;
+
+    }
   }
   .cards {
     padding-top:104px;
@@ -141,18 +157,20 @@ export default {
   margin-top:200px;
 }
 
-.md-drawer{
-  width:300px;
-  max-width: calc(100vw - 125px) !important;
-  z-index:999 !important;
-}
 .md-overlay {
-  z-index:888 !important;
-  height:100vh;
-}
+    z-index:888 !important;
+    height:100vh;
+    position:fixed;
+  }
 
 .drawer{
   height:100vh;
+  position:fixed;
+  &.md-drawer{
+  width:300px;
+  max-width: calc(100vw - 125px) !important;
+  z-index:999 !important;
+  }
   .drawer-title{
     padding:50px 16px;
     font-size:20px;

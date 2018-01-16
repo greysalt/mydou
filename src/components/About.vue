@@ -17,7 +17,7 @@
         <div class="item key">View Source Code</div>
         <div class="md-elevation-1">
           <md-ripple>
-          <router-link tag="div" class="item value" to="#">
+          <router-link tag="div" class="item value" to="https://github.com/greysalt/mydou">
               <md-icon>link</md-icon>
               <span>GitHub</span>
           </router-link>

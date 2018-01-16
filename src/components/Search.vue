@@ -7,7 +7,7 @@
           <md-icon>arrow_back</md-icon>
         </md-button>
           <md-field>
-            <md-input ref="movieSearch" v-model="queryInput" :placeholder="placeholder" @keyup.enter="newFetch()" @focus="placeholder=''" @blur="placeholder='请输入要搜索的电影信息'"></md-input>
+            <md-input ref="movieSearch" v-model="queryInput" :placeholder="placeholder" @keyup.enter="newFetch()" @focus="placeholder=''" @blur="placeholder='请输入搜索信息'"></md-input>
           </md-field>
 
             <md-button class="md-icon-button md-primary" @click="newFetch()">
@@ -21,20 +21,28 @@
     <div class="result-box">
       <div class="result">
         <transition-group tag="div" name="cardSlide">
-          <div class="card-box md-elevation-2" v-for="movie in moviesQuery" :key="movie.id">
+          <div class="card-box md-elevation-2" v-for="item in dataQuery" :key="item.id">
             <md-ripple>
-              <router-link tag="div" class="card" :to="{ path:'/movie/detail/' + movie.id }">
-                <div class="img" :style="{backgroundImage:'url(' + movie.images.small + ')'}"></div>
+              <router-link tag="div" class="card" :to="{ path:'/' + queryType +'/detail/' + item.id }">
+                <div class="img" :style="{backgroundImage:'url(' + item.images.large + ')'}"></div>
                 <div class="info">
                   <div>
-                    <div class="title">{{ movie.title }}<span> {{movie.year}}</span></div>
+                    <div class="title">{{ item.title }}<span v-if="item.year"> {{ item.year }}</span></div>
                     <div class="rating">
-                      <Star v-if="movie.rating.average !== 0" :rating="movie.rating.average"></Star>
-                      <span v-if="movie.rating.average === 0">暂无评分</span>
+                      <Star v-if="item.rating.average !== 0" :rating="item.rating.average"></Star>
+                      <span v-if="item.rating.average === 0">暂无评分</span>
                     </div>
-                    <p class="type">类型：{{ movie.genres | arrToString }}</p>
-                    <p class="director">导演：{{ movie.directors.map(e=>e.name) | arrToString }}</p>
-                    <p class="casts">主演：{{ movie.casts.map(e=>e.name) | arrToString }}</p>
+                    <div class="subinfo" v-if="queryType === 'movie'">
+                      <p class="type">类型：{{ item.genres | arrToString }}</p>
+                      <p class="director">导演：{{ item.directors.map(e=>e.name) | arrToString }}</p>
+                      <p class="casts">主演：{{ item.casts.map(e=>e.name) | arrToString }}</p>
+                    </div>
+                    <div class="subinfo" v-if="queryType === 'book'">
+                      <p>{{item.author | arrToString }}</p>
+                      <p>{{item.publisher}} / {{item.pubdate}}</p>
+                      <p>{{item.price}}</p>
+                    </div>
+                    
                   </div> 
                 </div>
               </router-link>
@@ -51,7 +59,7 @@
           
 
         <div class="md-layout md-alignment-center-center">
-          <md-button class="md-primary" v-if="showBtn && moviesQuery.length && queryInput && !showLoading" @click="fetchQuery()">加载更多</md-button>
+          <md-button class="md-primary" v-if="showBtn && dataQuery.length && queryInput && !showLoading" @click="fetchQuery()">加载更多</md-button>
           <md-button disabled v-if="!showBtn">- 没有更多内容啦 -</md-button>
         </div>
         </div> 
@@ -62,8 +70,8 @@
   </div>
 </template>
 <script>
-import Star from '../Star.vue'
-import Loading from '../Loading.vue'
+import Star from './Star.vue'
+import Loading from './Loading.vue'
 
 export default {
   components: {
@@ -76,11 +84,11 @@ export default {
     }
   },
   computed: {
-    moviesQuery () {
-      return this.$store.state.moviesQuery.subjects
+    dataQuery () {
+      return this.$store.state.dataQuery.subjects
     },
     showBtn () {
-      return this.$store.state.moviesQuery.showBtn
+      return this.$store.state.dataQuery.showBtn
     },
     showLoading () {
       return this.$store.state.showLoading
@@ -90,11 +98,14 @@ export default {
     },
     queryInput: {
       get: function () {
-        return this.$store.state.moviesQuery.q
+        return this.$store.state.dataQuery.q
       },
       set: function (newValue) {
-        this.$store.state.moviesQuery.q = newValue
+        this.$store.state.dataQuery.q = newValue
       }
+    },
+    queryType () {
+      return this.$route.params.nav
     }
   },
   methods: {
@@ -102,11 +113,11 @@ export default {
       this.$router.go(-1)
     },
     fetchQuery () {
-      this.$store.dispatch('fetchMoviesQuery')
+      this.$store.dispatch('fetchQuery', { queryType: this.queryType })
     },
     newFetch () {
-      this.$store.commit('CLEAR_FETCH_MOVIES_QUERY')
-      this.$store.dispatch('fetchMoviesQuery')
+      this.$store.commit('CLEAN_FETCH_QUERY')
+      this.$store.dispatch('fetchQuery', { queryType: this.queryType })
     }
   }
 }

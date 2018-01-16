@@ -1,132 +1,85 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import actions from './actions'
 // import axios from 'axios'
 
 Vue.use(Vuex)
 
 const state = {
+  movieTabName: 'in_theaters',
   movies: {
-    movie_in_theaters: {
+    in_theaters: {
       count: 0,
       subjects: []
     },
-    movie_coming_soon: {
+    coming_soon: {
       count: 0,
       subjects: []
     }
   },
-  moviesQuery: {
+  bookTabName: 'hot',
+  books: {
+    hot: {
+      count: 0,
+      subjects: []
+    },
+    scifi: {
+      count: 0,
+      subjects: []
+    },
+    detective: {
+      count: 0,
+      subjects: []
+    },
+    kongfu: {
+      count: 0,
+      subjects: []
+    },
+    romantic: {
+      count: 0,
+      subjects: []
+    }
+  },
+  dataQuery: {
     count: 0,
     subjects: [],
     q: '',
     showBtn: true
   },
   showLoading: false,
-  showError: '',
-  movieTabName: 'in_theaters'
+  showError: ''
 }
 
 const mutations = {
   FETCH_MOVIES (state, payload) {
-    state.movies['movie_' + payload.tabName].count = payload.subjects.length
-    state.movies['movie_' + payload.tabName].subjects = payload.subjects
+    state.movies[payload.tabName].count = payload.subjects.length
+    state.movies[payload.tabName].subjects = payload.subjects
   },
   CHANGE_MOVIE_TAB (state, payload) {
     state.movieTabName = payload.tabName
   },
-  FETCH_MOVIES_QUERY (state, payload) {
-    state.moviesQuery.subjects.push(...payload.subjects)
-    if (payload.subjects.length < 10) {
-      state.moviesQuery.showBtn = false
-    }
-    state.moviesQuery.count += 10
+  FETCH_BOOKS (state, payload) {
+    state.books[payload.tabName].subjects = payload.subjects
+    state.books[payload.tabName].count = payload.subjects.length
   },
-  CLEAR_FETCH_MOVIES_QUERY (state) {
-    state.moviesQuery.count = 0
-    state.moviesQuery.subjects = []
-    state.moviesQuery.showBtn = true
+  CHANGE_BOOK_TAB (state, payload) {
+    state.bookTabName = payload.tabName
+  },
+  FETCH_QUERY (state, payload) {
+    state.dataQuery.subjects.push(...payload.subjects)
+    if (payload.subjects.length < 10) {
+      state.dataQuery.showBtn = false
+    }
+    state.dataQuery.count += 10
+    console.log(state.dataQuery)
+  },
+  CLEAN_FETCH_QUERY (state) {
+    state.dataQuery.count = 0
+    state.dataQuery.subjects = []
+    state.dataQuery.showBtn = true
   },
   CHANGE_QUERY_INPUT (state, payload) {
-    state.moviesQuery.q = payload.q
-  }
-}
-
-const actions = {
-  fetchMovies (context, payload) {
-    var m = context.state.movies
-    if (m.movie_coming_soon.count === 0) {
-      context.state.showLoading = true
-      context.state.showError = ''
-      // const url = '/api/movie/' + payload.tabName + '?count=12' // 开发用
-      const url = 'https://api.douban.com/v2/movie/' + payload.tabName + '?count=12'
-      $.ajax({ // eslint-disable-line
-        url: url,
-        dataType: 'jsonp',
-        success: function (data) {
-          var movieArr = []
-          data.subjects.map(function (item) {
-            var movie = {}
-            movie.id = item.id
-            movie.title = item.title
-            movie.rating = item.rating.average
-            movie.imgUrl = item.images.large
-            movieArr.push(movie)
-          })
-          context.state.showLoading = false
-          context.commit('FETCH_MOVIES', {subjects: movieArr, tabName: payload.tabName})
-        },
-        error: function (xhr, err) {
-          context.state.showLoading = false
-          context.state.showError = 'Opps~' + err
-        }
-      })
-
-      // axios.get(url)
-      //   .then(function (res) {
-      //     var movieArr = []
-      //     res.data.subjects.map(function (item) {
-      //       var movie = {}
-      //       movie.id = item.id
-      //       movie.title = item.title
-      //       movie.rating = item.rating.average
-      //       movie.imgUrl = item.images.large
-      //       movieArr.push(movie)
-      //     })
-      //     context.state.showLoading = false
-      //     context.commit('FETCH_MOVIES', {subjects: movieArr, tabName: payload.tabName})
-      //   }).catch(function (error) {
-      //     context.state.showLoading = false
-      //     context.state.showError = 'Opps~' + error.message
-      //   })
-    }
-  },
-  fetchMoviesQuery (context, payload) {
-    const query = context.state.moviesQuery
-    // const url = '/api/movie/search?q=' + query.q + '&count=10&start=' + query.count // 开发用
-    const url = 'https://api.douban.com/v2/movie/search?q=' + query.q + '&count=10&start=' + query.count
-    context.state.showError = ''
-    context.state.showLoading = true
-    $.ajax({ // eslint-disable-line
-      url: url,
-      dataType: 'jsonp',
-      success: function (data) {
-        context.state.showLoading = false
-        context.commit('FETCH_MOVIES_QUERY', {subjects: data.subjects})
-      },
-      error: function (xhr, err) {
-        context.state.showLoading = false
-        context.state.showError = 'Opps~' + err
-      }
-    })
-
-    // axios.get(url)
-    //   .then(function (res) {
-    //     context.state.showLoading = false
-    //     context.commit('FETCH_MOVIES_QUERY', {subjects: res.data.subjects})
-    //   }).catch(function (error) {
-    //     context.state.showLoading = false
-    //     context.state.showError = 'Opps~' + error.message
-    //   })
+    state.dataQuery.q = payload.q
   }
 }
 

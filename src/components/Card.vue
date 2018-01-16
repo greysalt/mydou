@@ -1,18 +1,18 @@
 <template>
   <div class="card-container">
     <div class="md-layout md-alignment-left">   
-      <div class="md-layout-item md-size-33" v-for="movie in subjects" :key="movie.id">
+      <div class="md-layout-item md-size-33" v-for="item in subjects" :key="item.id">
         <md-card class="card">
           <md-ripple>
-            <router-link class="card-link" :to="{ path:'movie/detail/' + movie.id }">
+            <router-link class="card-link" :to="{ path: navName + '/detail/' + item.id }">
               <md-card-media>
-                <div class="card-img" :style="{ backgroundImage: 'url(' + movie.imgUrl + ')' }"></div>
+                <div class="card-img" :style="{ backgroundImage: 'url(' + item.imgUrl + ')' }"></div>
               </md-card-media>
               <div class="card-info">
-                <div class="card-title">{{ movie.title}}</div> 
+                <div class="card-title">{{ item.title }}</div> 
                 <div class="card-rating">
-                  <Star v-if="movie.rating !== 0" :rating="movie.rating"></Star>
-                  <span v-if="movie.rating === 0">暂无评分</span>
+                  <Star v-if="item.rating !== 0" :rating="item.rating"></Star>
+                  <span v-if="item.rating === 0">暂无评分</span>
                 </div>
               </div>
             </router-link>
@@ -25,20 +25,16 @@
   </div>
 </template>
 <script>
-import Star from '../Star.vue'
+import Star from './Star.vue'
 
 export default{
   components: {
     Star
   },
-  data () {
-    return {
-    }
-  },
-  props: ['tabName'],
+  props: ['tabName', 'navName'],
   computed: {
     subjects () {
-      return this.$store.state.movies['movie_' + this.tabName].subjects
+      return this.$store.state[this.navName + 's'][this.tabName].subjects
     }
   }
 }

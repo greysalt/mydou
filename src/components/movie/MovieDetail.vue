@@ -52,10 +52,10 @@
           <div class="person-wrap">
           
             <div class="person" v-for="person in movie.directors">
-              <a :href="person.avatars.small" target="_blank">
+              <!-- <a :href="person.avatars.small" target="_blank"> -->
                 <div class="img md-elevation-1" :style="{backgroundImage:'url(' + person.avatars.small + ')'}"></div>
                 <p class="name">{{ person.name }}</p>
-              </a>
+              <!-- </a> -->
             </div>
           
           </div>
@@ -70,9 +70,9 @@
           <div class="person-wrap" :style="{width: (movie.casts.length*100 + 30) + 'px'}">
           
             <div class="person" v-for="person in movie.casts">
-              <a :href="person.avatars.small" target="_blank">
+              <!-- <a :href="person.avatars.small" target="_blank"> -->
                 <div class="img  md-elevation-1" :style="{backgroundImage:'url(' + person.avatars.small + ')' }"></div>
-              </a>
+              <!-- </a> -->
               <p class="name">{{ person.name }}</p>
             </div>
           

@@ -3,7 +3,7 @@
       <div class="head">            
         <Nav navName="movie" :showDrawer="showDrawer"></Nav>
 
-        <md-tabs class="index-tab" md-alignment="fixed" :md-active-tab="'tab_' + movieTabName">
+        <md-tabs class="index-tab" md-alignment="centered" :md-active-tab="'tab_' + movieTabName">
           <md-tab id="tab_in_theaters" md-label="正在热映" @click="changeTab('in_theaters')"></md-tab>
           <md-tab id="tab_coming_soon" md-label="即将上映" @click="changeTab('coming_soon')"></md-tab>
         </md-tabs>

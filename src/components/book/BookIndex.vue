@@ -1,15 +1,17 @@
 <template>
   <div class="index-container" :class="{'hide': showDrawer}">
     
-    <Nav navName="book"></Nav>
+    <div class="head">
+      <Nav navName="book"></Nav>
 
-    <md-tabs class="index-tab" md-alignment="fixed" :md-active-tab="'tab_book_' + bookTabName">
-      <md-tab id="tab_book_hot" md-label="热门" @click="changeTab('hot','2017')"></md-tab>
-      <md-tab id="tab_book_scifi" md-label="科幻" @click="changeTab('scifi', '科幻')"></md-tab>
-      <md-tab id="tab_book_detective" md-label="推理" @click="changeTab('detective', '推理')"></md-tab>
-      <md-tab id="tab_book_kongfu" md-label="武侠" @click="changeTab('kongfu', '武侠')"></md-tab>
-      <md-tab id="tab_book_romantic" md-label="言情" @click="changeTab('romantic', '言情')"></md-tab>
-    </md-tabs>
+      <md-tabs class="index-tab" md-alignment="centered" :md-active-tab="'tab_book_' + bookTabName">
+        <md-tab id="tab_book_hot" md-label="热门" @click="changeTab('hot','2017')"></md-tab>
+        <md-tab id="tab_book_scifi" md-label="科幻" @click="changeTab('scifi', '科幻')"></md-tab>
+        <md-tab id="tab_book_detective" md-label="推理" @click="changeTab('detective', '推理')"></md-tab>
+        <md-tab id="tab_book_kongfu" md-label="武侠" @click="changeTab('kongfu', '武侠')"></md-tab>
+        <md-tab id="tab_book_romantic" md-label="言情" @click="changeTab('romantic', '言情')"></md-tab>
+      </md-tabs>
+    </div>  
 
     <div class="index-loading">
       <transition name="loading-fade">

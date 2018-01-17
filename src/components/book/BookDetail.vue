@@ -1,5 +1,5 @@
 <template>
-  <div class="m-detail-container">
+  <div class="b-detail-container">
     
     <div class="head">
       <div class="post md-elevation-24" :style="{backgroundImage:'url(' + book.images.large + ')'}"></div>
@@ -23,7 +23,7 @@
         <span class="key">出版社：</span>
         <div class="value">{{ book.publisher }}</div>
       </div>
-      <div class="info-group">
+      <div class="info-group" v-if="book.subtitle">
         <span class="key">副标题：</span>
         <div class="value">{{ book.subtitle }}</div>
       </div>
@@ -126,12 +126,13 @@ export default {
   },
   created () {
     this.fetchBookDetail()
+    //window.srollTo(0, 0)
   }
 }
 </script>
 
 <style lang="scss">
-.m-detail-container{
+.b-detail-container{
   position: absolute;
   z-index:400;
   width:100%;
@@ -180,7 +181,7 @@ export default {
       display:flex;
       justify-content:left;
       .key{
-        // width:70px;
+        width:70px;
         flex-shrink:0;
         color:#aaa;
       }

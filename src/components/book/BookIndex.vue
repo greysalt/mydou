@@ -1,5 +1,5 @@
 <template>
-  <div class="b-index-container">
+  <div class="index-container" :class="{'hide': showDrawer}">
     
     <Nav navName="book"></Nav>
 
@@ -38,6 +38,9 @@ export default {
     Loading
   },
   computed: {
+    showDrawer () {
+      return this.$store.state.showDrawer
+    },
     bookTabName () {
       return this.$store.state.bookTabName
     },
@@ -67,15 +70,5 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.b-index-container {
-  position: absolute;
-  width:100%;
-  .index-loading {
-    position:absolute;
-    width:100%;
-    z-index:0;
-    margin-top:200px;
-  }
-}
+<style>
 </style>

@@ -46,11 +46,15 @@ const state = {
     q: '',
     showBtn: true
   },
+  showDrawer: false,
   showLoading: false,
   showError: ''
 }
 
 const mutations = {
+  TOGGLE_DRAWER (state) {
+    state.showDrawer = !state.showDrawer
+  },
   FETCH_MOVIES (state, payload) {
     state.movies[payload.tabName].count = payload.subjects.length
     state.movies[payload.tabName].subjects = payload.subjects

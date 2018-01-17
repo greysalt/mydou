@@ -48,7 +48,7 @@
     <div>
       <md-ripple>
         <div class="summary">
-            <span class="start">剧情简介：</span>
+            <span class="start">内容简介：</span>
             <p>{{ book.summary }}</p>
         </div>
       </md-ripple>
@@ -126,7 +126,6 @@ export default {
   },
   created () {
     this.fetchBookDetail()
-    //window.srollTo(0, 0)
   }
 }
 </script>

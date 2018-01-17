@@ -20,11 +20,8 @@ npm run build --report
 
 ## Demo
 
-``` bash
-
 [ENTERY](https://greysalt.github.io/mydou/dist/index)
 
-```
 
 
 

@@ -1,7 +1,7 @@
 <template>
-  <div class="index-container" ref="index_container">
+  <div class="index-container" :class="{'hide': showDrawer}">
       <div class="head">            
-        <Nav navName="movie"></Nav>
+        <Nav navName="movie" :showDrawer="showDrawer"></Nav>
 
         <md-tabs class="index-tab" md-alignment="fixed" :md-active-tab="'tab_' + movieTabName">
           <md-tab id="tab_in_theaters" md-label="正在热映" @click="changeTab('in_theaters')"></md-tab>
@@ -37,12 +37,10 @@ export default {
     Loading,
     Nav
   },
-  data () {
-    return {
-      showDrawer: false
-    }
-  },
   computed: {
+    showDrawer () {
+      return this.$store.state.showDrawer
+    },
     showLoading () {
       return this.$store.state.showLoading
     },
@@ -59,15 +57,9 @@ export default {
         this.$store.dispatch('fetchMovies', {tabName: tabName})
       }
       this.$store.commit('CHANGE_MOVIE_TAB', {tabName: tabName})
-    }
-  },
-  watch: {
-    showDrawer: function (val) {
-      if (val === true) {
-        this.$refs.index_container.classList.add('hide')
-      } else {
-        this.$refs.index_container.classList.remove('hide')
-      }
+    },
+    toggleDrawer () {
+      this.$store.commit('TOGGLE_DRAWER')
     }
   },
   mounted () {

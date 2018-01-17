@@ -17,10 +17,10 @@
         <div class="item key">View Source Code</div>
         <div class="md-elevation-1">
           <md-ripple>
-          <router-link tag="div" class="item value" to="https://github.com/greysalt/mydou">
+          <a class="item value" href="https://github.com/greysalt/mydou" target="_blank">
               <md-icon>link</md-icon>
               <span>GitHub</span>
-          </router-link>
+          </a>
           </md-ripple> 
         </div>
         
@@ -83,6 +83,7 @@ export default {
         border:1px solid #ddd;
         border-radius:4px;
         .item {
+          display:block;
           width:100%;
           line-height:50px;
           height:50px;

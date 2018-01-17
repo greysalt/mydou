@@ -31,7 +31,7 @@
             <span class="cs">( coming soon )</span>
           </md-list-item>
           <div class="divider"></div>
-          <md-list-item to="/about/info">
+          <md-list-item to="/about/info" @click="showDrawer=!showDrawer">
             <md-icon>info</md-icon>
             <span class="md-list-item-text">关于</span>
           </md-list-item>
@@ -44,11 +44,20 @@ export default {
   props: ['navName'],
   data () {
     return {
-      showDrawer: false,
       iconActive: {
         movie: '',
         book: '',
         favor: ''
+      }
+    }
+  },
+  computed: {
+    showDrawer: {
+      get: function () {
+        return this.$store.state.showDrawer
+      },
+      set: function (newValue) {
+        this.$store.state.showDrawer = newValue
       }
     }
   },
@@ -69,8 +78,6 @@ export default {
 }
 
 .drawer{
-  height:100vh;
-  position:fixed;
   &.md-drawer{
   width:300px;
   max-width: calc(100vw - 125px) !important;

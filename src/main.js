@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
-import 'vue-material/dist/theme/dou-green.css'
+import 'vue-material/dist/theme/default.css'
 import store from './store/store'
 
 Vue.use(VueMaterial)

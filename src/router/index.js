@@ -6,6 +6,7 @@ import BookIndex from '@/components/book/BookIndex'
 import BookDetail from '@/components/book/BookDetail'
 import Search from '@/components/Search'
 import About from '@/components/About'
+import Test from '@/components/Test'
 
 Vue.use(Router)
 
@@ -20,7 +21,7 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/movie'
+      redirect: '/test'
     },
     // movie
     {
@@ -55,6 +56,12 @@ export default new Router({
       path: '/about/info',
       name: 'about',
       component: About
+    },
+    // test
+    {
+      path: '/test',
+      name: 'test',
+      component: Test
     },
     // redirect
     {

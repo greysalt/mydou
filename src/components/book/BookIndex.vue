@@ -4,7 +4,7 @@
     <div class="head">
       <Nav navName="book"></Nav>
 
-      <md-tabs class="index-tab" md-alignment="centered" :md-active-tab="'tab_book_' + bookTabName">
+      <md-tabs class="index-tab" md-alignment="fixed" :md-active-tab="'tab_book_' + bookTabName">
         <md-tab id="tab_book_hot" md-label="热门" @click="changeTab('hot','2017')"></md-tab>
         <md-tab id="tab_book_scifi" md-label="科幻" @click="changeTab('scifi', '科幻')"></md-tab>
         <md-tab id="tab_book_detective" md-label="推理" @click="changeTab('detective', '推理')"></md-tab>

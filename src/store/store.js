@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import actions from './actions'
-// import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -55,18 +54,18 @@ const mutations = {
   TOGGLE_DRAWER (state) {
     state.showDrawer = !state.showDrawer
   },
-  FETCH_MOVIES (state, payload) {
+  FETCH_MOVIE (state, payload) {
     state.movies[payload.tabName].count = payload.subjects.length
     state.movies[payload.tabName].subjects = payload.subjects
   },
-  CHANGE_MOVIE_TAB (state, payload) {
+  CHANGE_TAB_MOVIE (state, payload) {
     state.movieTabName = payload.tabName
   },
-  FETCH_BOOKS (state, payload) {
+  FETCH_BOOK (state, payload) {
     state.books[payload.tabName].subjects = payload.subjects
     state.books[payload.tabName].count = payload.subjects.length
   },
-  CHANGE_BOOK_TAB (state, payload) {
+  CHANGE_TAB_BOOK (state, payload) {
     state.bookTabName = payload.tabName
   },
   FETCH_QUERY (state, payload) {

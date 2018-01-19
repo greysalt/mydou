@@ -113,7 +113,6 @@ export default {
         dataType: 'jsonp',
         success: function (data) {
           _that.book = data
-          console.log(data)
         },
         error: function (xhr, err) {
           console.log(err)

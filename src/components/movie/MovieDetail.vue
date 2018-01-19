@@ -53,7 +53,7 @@
           
             <div class="person" v-for="person in movie.directors">
               <!-- <a :href="person.avatars.small" target="_blank"> -->
-                <div class="img md-elevation-1" :style="{backgroundImage:'url(' + person.avatars.small + ')'}"></div>
+                <div class="img md-elevation-1" :style="{backgroundImage:'url(' + person.avatars.small + '),url(/mydou/dist/static/img/cast_default.png)'}"></div>
                 <p class="name">{{ person.name }}</p>
               <!-- </a> -->
             </div>
@@ -71,7 +71,7 @@
           
             <div class="person" v-for="person in movie.casts">
               <!-- <a :href="person.avatars.small" target="_blank"> -->
-                <div class="img  md-elevation-1" :style="{backgroundImage:'url(' + person.avatars.small + ')' }"></div>
+                <div class="img  md-elevation-1" :style="{backgroundImage:'url(' + person.avatars.small + '),url(/mydou/dist/static/img/cast_default.png)' }"></div>
               <!-- </a> -->
               <p class="name">{{ person.name }}</p>
             </div>
@@ -245,6 +245,7 @@ export default {
             height:140px;
             background:#eee;
             background-size:cover;
+            background-image: url(/static/img/cast_default.png);
           }
           .name{
             width:100%;

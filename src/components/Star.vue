@@ -27,6 +27,7 @@ export default{
 <style lang="scss">
 .star {
   line-height:inherit;
+  white-space:nowrap;
   .material-icons{
     display: block;
     float: left;

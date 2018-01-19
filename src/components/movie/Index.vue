@@ -2,11 +2,8 @@
   <div class="index-container" :class="{'hide': showDrawer}">
       <div class="head">            
         <Nav navName="movie" :showDrawer="showDrawer"></Nav>
-
-        <md-tabs class="index-tab" md-alignment="fixed" :md-active-tab="'tab_' + movieTabName">
-          <md-tab id="tab_in_theaters" md-label="正在热映" @click="changeTab('in_theaters')"></md-tab>
-          <md-tab id="tab_coming_soon" md-label="即将上映" @click="changeTab('coming_soon')"></md-tab>
-        </md-tabs>
+        
+        <Tabs :tabs="tabs" navName="movie"></Tabs>
       </div>
 
       <div class="index-loading">
@@ -29,13 +26,23 @@
 import Card from '../Card.vue'
 import Loading from '../Loading.vue'
 import Nav from '../Nav.vue'
+import Tabs from '../Tabs.vue'
 
 export default {
 
   components: {
     Card,
     Loading,
-    Nav
+    Nav,
+    Tabs
+  },
+  data () {
+    return {
+      tabs: [
+        {tabName: 'in_theaters', label: '正在热映'},
+        {tabName: 'coming_soon', label: '即将上映'}
+      ]
+    }
   },
   computed: {
     showDrawer () {
@@ -52,19 +59,13 @@ export default {
     }
   },
   methods: {
-    changeTab (tabName) {
-      if (this.$store.state.movies[tabName].count === 0) {
-        this.$store.dispatch('fetchMovies', {tabName: tabName})
-      }
-      this.$store.commit('CHANGE_MOVIE_TAB', {tabName: tabName})
-    },
     toggleDrawer () {
       this.$store.commit('TOGGLE_DRAWER')
     }
   },
   mounted () {
     if (this.$store.state.movies.in_theaters.count === 0) {
-      this.$store.dispatch('fetchMovies', {tabName: 'in_theaters'})
+      this.$store.dispatch('fetch_movie', {tabName: 'in_theaters'})
     }
   }
 }

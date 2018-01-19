@@ -1,7 +1,7 @@
 const Host = 'https://api.douban.com/v2'
 
 const actions = {
-  fetchMovies (context, payload) {
+  fetch_movie (context, payload) {
     var m = context.state.movies
     if (m.coming_soon.count === 0) {
       context.state.showLoading = true
@@ -22,7 +22,7 @@ const actions = {
             movieArr.push(movie)
           })
           context.state.showLoading = false
-          context.commit('FETCH_MOVIES', {subjects: movieArr, tabName: payload.tabName})
+          context.commit('FETCH_MOVIE', {subjects: movieArr, tabName: payload.tabName})
         },
         error: function (xhr, err) {
           context.state.showLoading = false
@@ -49,7 +49,7 @@ const actions = {
       //   })
     }
   },
-  fetchBooks (context, payload) {
+  fetch_book (context, payload) {
     const url = Host + '/book/search?tag=' + payload.tag + '&count=12'
     context.state.showError = ''
     context.state.showLoading = true
@@ -67,7 +67,7 @@ const actions = {
           bookArr.push(book)
         })
         context.state.showLoading = false
-        context.commit('FETCH_BOOKS', {tabName: payload.tabName, subjects: bookArr})
+        context.commit('FETCH_BOOK', {tabName: payload.tabName, subjects: bookArr})
       },
       error: function (xhr, err) {
         context.state.showLoading = false

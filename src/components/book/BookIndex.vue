@@ -1,16 +1,9 @@
 <template>
-  <div class="index-container" :class="{'hide': showDrawer}">
-    
+  <div class="index-container" :class="{'hide': showDrawer}">   
     <div class="head">
-      <Nav navName="book"></Nav>
+      <Nav navName="book" :showDrawer="showDrawer"></Nav>
 
-      <md-tabs class="index-tab" md-alignment="fixed" :md-active-tab="'tab_book_' + bookTabName">
-        <md-tab id="tab_book_hot" md-label="热门" @click="changeTab('hot','2017')"></md-tab>
-        <md-tab id="tab_book_scifi" md-label="科幻" @click="changeTab('scifi', '科幻')"></md-tab>
-        <md-tab id="tab_book_detective" md-label="推理" @click="changeTab('detective', '推理')"></md-tab>
-        <md-tab id="tab_book_kongfu" md-label="武侠" @click="changeTab('kongfu', '武侠')"></md-tab>
-        <md-tab id="tab_book_romantic" md-label="言情" @click="changeTab('romantic', '言情')"></md-tab>
-      </md-tabs>
+      <Tabs :tabs="tabs" navName="book"></Tabs>
     </div>  
 
     <div class="index-loading">
@@ -32,12 +25,25 @@
 import Nav from '../Nav.vue'
 import Card from '../Card.vue'
 import Loading from '../Loading.vue'
+import Tabs from '../Tabs.vue'
 
 export default {
   components: {
     Nav,
     Card,
-    Loading
+    Loading,
+    Tabs
+  },
+  data () {
+    return {
+      tabs: [
+        {tabName: 'hot', label: '热门'},
+        {tabName: 'scifi', label: '科幻'},
+        {tabName: 'detective', label: '推理'},
+        {tabName: 'kongfu', label: '武侠'},
+        {tabName: 'romantic', label: '言情'}
+      ]
+    }
   },
   computed: {
     showDrawer () {
@@ -54,19 +60,13 @@ export default {
     }
   },
   methods: {
-    fetchBooks (tabName, tag) {
-      this.$store.dispatch('fetchBooks', {tag: tag, tabName: tabName})
-    },
-    changeTab (tabName, tag) {
-      if (this.$store.state.books[tabName].count === 0) {
-        this.fetchBooks(tabName, tag)
-      }
-      this.$store.commit('CHANGE_BOOK_TAB', {tabName: tabName})
+    fetchBook (tabName, tag) {
+      this.$store.dispatch('fetch_book', {tag: tag, tabName: tabName})
     }
   },
   mounted () {
     if (this.$store.state.books.hot.count === 0) {
-      this.fetchBooks('hot', '2017')
+      this.fetchBook('hot', '2017')
     }
   }
 }

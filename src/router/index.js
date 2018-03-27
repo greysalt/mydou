@@ -5,6 +5,7 @@ import MovieDetail from '@/components/movie/MovieDetail'
 import BookIndex from '@/components/book/BookIndex'
 import BookDetail from '@/components/book/BookDetail'
 import Search from '@/components/Search'
+import Favor from '@/components/favor/Favor'
 import About from '@/components/About'
 
 Vue.use(Router)
@@ -49,6 +50,12 @@ export default new Router({
       path: '/search/:nav',
       name: 'search',
       component: Search
+    },
+    // favor
+    {
+      path: '/favor',
+      name: 'favor',
+      component: Favor
     },
     // about
     {

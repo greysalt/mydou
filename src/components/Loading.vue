@@ -17,13 +17,13 @@
   opacity:0;
 }
 
-.loading-faed-enter-active, .loading-faed-leave-active {
+.loading-fade-enter-active, .loading-fade-leave-active {
   transition: opacity .5s ease;
 }
-.loading-faed-enter {
+.loading-fade-enter {
   opacity:0;
 }
-.loading-faed-leave-to {
+.loading-fade-leave-to {
   opacity:0;
 }
 

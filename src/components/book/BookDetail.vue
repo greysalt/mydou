@@ -5,6 +5,9 @@
       <div class="post md-elevation-24" :style="{backgroundImage:'url(' + book.images.large + ')'}"></div>
       <div class="btn-back" @click="back()">
           <BtnBack></BtnBack>
+      </div>
+      <div class="btn-favor" @click="addFavor()">
+          <BtnFavor :isLiked="this.isLiked"></BtnFavor>
       </div>    
     </div>
     <div class="main-title">   
@@ -67,20 +70,29 @@
       </md-ripple>
     </div>
 
+    <transition name="popup">
+      <Popup v-show="popActive" :message="popMessage"></Popup>
+    </transition>
+
   </div>
 </template>
 <script>
 import Star from '../Star.vue'
 import BtnBack from '../BtnBack.vue'
+import BtnFavor from '../BtnFavor.vue'
+import Popup from '../Popup.vue'
 
 export default {
   components: {
     Star,
-    BtnBack
+    BtnBack,
+    BtnFavor,
+    Popup
   },
   data () {
     return {
       book: {
+        id: '',
         title: '',
         rating: {
           average: ''
@@ -98,7 +110,10 @@ export default {
         summary: '',
         author_intro: '',
         tags: []
-      }
+      },
+      isLiked: false,
+      popActive: false,
+      popMessage: ''
     }
   },
   computed: {
@@ -113,6 +128,14 @@ export default {
         dataType: 'jsonp',
         success: function (data) {
           _that.book = data
+
+          // 判断是否已经收藏
+          var itemIndex = _that.getIndex(data.id)
+          if (itemIndex !== -1) {
+            _that.isLiked = true
+          } else {
+            _that.isLiked = false
+          }
         },
         error: function (xhr, err) {
           console.log(err)
@@ -121,6 +144,58 @@ export default {
     },
     back () {
       this.$router.go(-1)
+    },
+
+    // 收藏按钮
+    addFavor () {
+      if (this.book.id) {
+        const STORAGE_KEY = 'mydou_favor_book'
+        var favorItems = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+        var favorItem = {
+          id: this.book.id,
+          title: this.book.title,
+          img: this.book.images.large,
+          rating: this.book.rating.average
+        }
+        if (this.isLiked !== true) {
+          // 加入收藏
+          favorItems.push(favorItem)
+          this.isLiked = true
+          this.showPop('已加入收藏 : )')
+        } else {
+          // 取消收藏
+          var itemIndex = this.getIndex(this.book.id)
+          if (itemIndex !== -1) {
+            favorItems.splice(itemIndex, 1)
+            this.isLiked = false
+          }
+          this.showPop('已取消收藏 : (')
+        }
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(favorItems))
+      }
+    },
+    // 从 LOCAL STORAGE 获取已收藏电影的 INDEX
+    getIndex (val) {
+      var index = -1
+      const STORAGE_KEY = 'mydou_favor_book'
+      var favorItems = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]')
+      if (favorItems) {
+        for (var i = 0; i < favorItems.length; i++) {
+          if (favorItems[i].id === val) {
+            index = i
+            break
+          }
+        }
+      }
+      return index
+    },
+    showPop (msg) {
+      this.popActive = true
+      this.popMessage = msg
+      var _that = this
+      setTimeout(function () {
+        _that.popActive = false
+      }, 2000)
     }
   },
   created () {
@@ -190,6 +265,7 @@ export default {
   .summary{
     padding:20px;
     background:#eee;
+    line-height:1.6em;
     span{
       color:#aaa;
     }
@@ -222,6 +298,12 @@ export default {
     z-index:999;
     top:10px;
     left:6px;
+  }
+  .btn-favor{
+    position:absolute;
+    z-index:999;
+    top:10px;
+    right:6px;
   }
 
 }

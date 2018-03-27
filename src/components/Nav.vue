@@ -25,10 +25,9 @@
             <md-icon :class="{'md-primary': iconActive.book }">book</md-icon>
             <span class="md-list-item-text">图书</span>  
           </md-list-item>
-          <md-list-item to="/favor">
+          <md-list-item to="/favor" @click="showDrawer=!showDrawer">
             <md-icon  :class="{'md-primary': iconActive.favor }">favorite</md-icon>
             <span class="md-list-item-text">收藏</span>
-            <span class="cs">( coming soon )</span>
           </md-list-item>
           <div class="divider"></div>
           <md-list-item to="/about/info" @click="showDrawer=!showDrawer">

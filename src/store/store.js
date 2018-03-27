@@ -47,7 +47,9 @@ const state = {
   },
   showDrawer: false,
   showLoading: false,
-  showError: ''
+  showError: '',
+  // 收藏
+  favorTabName: 'movie'
 }
 
 const mutations = {
@@ -83,6 +85,9 @@ const mutations = {
   },
   CHANGE_QUERY_INPUT (state, payload) {
     state.dataQuery.q = payload.q
+  },
+  CHANGE_FAVOR_TAB (state, payload) {
+    state.favorTabName = payload.tabName
   }
 }
 

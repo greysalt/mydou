@@ -5,7 +5,7 @@
         <md-icon>menu</md-icon>
       </md-button>
       <span class="md-title nav-title">{{ navName }}</span>
-      <div class="md-toolbar-section-end">
+      <div class="md-toolbar-section-end" v-if="navName === 'movie' || navName === 'book'">
         <router-link :to="`/search/${navName}`">
           <md-button class="md-icon-button"  @click="cleanQuery()">
             <md-icon>search</md-icon>

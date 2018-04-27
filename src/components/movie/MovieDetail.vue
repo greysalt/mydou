@@ -2,7 +2,7 @@
   <div class="m-detail-container">
     
     <div class="head">
-      <div class="post md-elevation-24" :style="{backgroundImage:'url(' + movie.images.small + ')'}"></div>
+      <div class="post md-elevation-24" :style="{backgroundImage:'url(' + movie.images.small + '),url(/mydou/dist/static/img/book_default.png)'}"></div>
       <div class="btn-back" @click="back()">
           <BtnBack></BtnBack>
       </div>

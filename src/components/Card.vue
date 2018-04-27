@@ -6,7 +6,7 @@
           <md-ripple>
             <router-link class="card-link" :to="{ path: navName + '/detail/' + item.id }">
               <md-card-media>
-                <div class="card-img" :style="{ backgroundImage: 'url(' + item.imgUrl + ')' }"></div>
+                <div class="card-img" :style="{ backgroundImage: 'url(' + item.imgUrl + '),url(/mydou/dist/static/img/book_default.png)' }"></div>
               </md-card-media>
               <div class="card-info">
                 <div class="card-title">{{ item.title }}</div> 

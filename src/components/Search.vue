@@ -24,7 +24,7 @@
           <div class="card-box md-elevation-2" v-for="item in dataQuery" :key="item.id">
             <md-ripple>
               <router-link tag="div" class="card" :to="{ path:'/' + queryType +'/detail/' + item.id }">
-                <div class="img" :style="{backgroundImage:'url(' + item.images.large + ')'}"></div>
+                <div class="img" :style="{backgroundImage:'url(' + item.images.large + '),url(/mydou/dist/static/img/book_default.png)'}"></div>
                 <div class="info">
                   <div>
                     <div class="title">{{ item.title }}<span v-if="item.year"> {{ item.year }}</span></div>

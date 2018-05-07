@@ -76,7 +76,6 @@ const mutations = {
       state.dataQuery.showBtn = false
     }
     state.dataQuery.count += 10
-    console.log(state.dataQuery)
   },
   CLEAN_FETCH_QUERY (state) {
     state.dataQuery.count = 0
